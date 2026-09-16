@@ -27,7 +27,9 @@ export default function BookModal({
   onSelectBook,
   onClose,
   onUpdateBook,
-  onDeleteBook
+  onDeleteBook,
+  canEdit = true,
+  onRequireAuth
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedBook, setEditedBook] = useState({ ...book });
@@ -83,13 +85,22 @@ export default function BookModal({
 
   if (!book) return null;
 
+  // Guests can browse the demo shelf, but any change asks them to sign in first
+  const ensureCanEdit = () => {
+    if (canEdit) return true;
+    onRequireAuth?.();
+    return false;
+  };
+
   const handleSave = () => {
+    if (!ensureCanEdit()) return;
     onUpdateBook(editedBook);
     setIsEditing(false);
   };
 
   const handleAddQuote = (e) => {
     e.preventDefault();
+    if (!ensureCanEdit()) return;
     if (!newQuote.trim()) return;
     const updatedQuotes = [...(editedBook.quotes || []), newQuote.trim()];
     const updated = { ...editedBook, quotes: updatedQuotes };
@@ -99,6 +110,7 @@ export default function BookModal({
   };
 
   const handleRemoveQuote = (indexToRemove) => {
+    if (!ensureCanEdit()) return;
     const updatedQuotes = (editedBook.quotes || []).filter((_, i) => i !== indexToRemove);
     const updated = { ...editedBook, quotes: updatedQuotes };
     setEditedBook(updated);
@@ -106,18 +118,21 @@ export default function BookModal({
   };
 
   const toggleFavorite = () => {
+    if (!ensureCanEdit()) return;
     const updated = { ...editedBook, favorite: !editedBook.favorite };
     setEditedBook(updated);
     onUpdateBook(updated);
   };
 
   const handleRatingChange = (newRating) => {
+    if (!ensureCanEdit()) return;
     const updated = { ...editedBook, rating: newRating };
     setEditedBook(updated);
     onUpdateBook(updated);
   };
 
   const handleStatusChange = (newStatus) => {
+    if (!ensureCanEdit()) return;
     const updated = { ...editedBook, status: newStatus };
     setEditedBook(updated);
     onUpdateBook(updated);
@@ -227,7 +242,7 @@ export default function BookModal({
               <Button
                 variant={isEditing ? 'babyblue' : 'outline'}
                 size="iconSm"
-                onClick={() => setIsEditing(!isEditing)}
+                onClick={() => ensureCanEdit() && setIsEditing(!isEditing)}
                 title="Düzenleme modu"
               >
                 <Edit3 className="w-4 h-4" />
@@ -237,6 +252,7 @@ export default function BookModal({
                 variant="destructive"
                 size="iconSm"
                 onClick={() => {
+                  if (!ensureCanEdit()) return;
                   if (window.confirm(`"${book.title}" kitabını silmek istediğinden emin misin?`)) {
                     onDeleteBook(book.id);
                     onClose();

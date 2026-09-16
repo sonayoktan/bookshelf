@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import BookSpine from './BookSpine';
 import TimelineView from './TimelineView';
-import { Layers, BookOpen, Calendar, Plus, ChevronLeft, ChevronRight, MoveHorizontal } from 'lucide-react';
+import { Layers, BookOpen, Calendar, Plus, ChevronLeft, ChevronRight, MoveHorizontal, Sparkles, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -13,7 +13,10 @@ export default function Bookshelf({
   onSelectBook,
   viewMode,
   setViewMode,
-  onOpenAddModal
+  onOpenAddModal,
+  isLoading = false,
+  isShelfEmpty = false,
+  onLoadSampleBooks
 }) {
   const shelfRef = useRef(null);
   const isDownRef = useRef(false);
@@ -180,7 +183,44 @@ export default function Bookshelf({
       </div>
 
       {/* View Mode Content */}
-      {viewMode === 'timeline' ? (
+      {isLoading ? (
+        <div className="py-24 flex items-center justify-center gap-2 text-sm font-medium text-gray-700 dark:text-zinc-400">
+          <Loader2 className="w-5 h-5 animate-spin text-sky-600 dark:text-sky-400" />
+          <span>Rafın hazırlanıyor...</span>
+        </div>
+      ) : isShelfEmpty ? (
+        <Card className="py-20 px-4 text-center flex flex-col items-center justify-center border border-dashed border-pink-300 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/70 shadow-sm">
+          <div className="w-16 h-16 rounded-2xl bg-[#89CFF0]/25 dark:bg-[#89CFF0]/20 text-sky-700 dark:text-sky-300 flex items-center justify-center mb-4">
+            <BookOpen className="w-8 h-8" />
+          </div>
+          <h3 className="text-lg font-serif font-bold text-zinc-950 dark:text-zinc-100 mb-1">
+            Rafın seni bekliyor
+          </h3>
+          <p className="text-sm text-gray-700 dark:text-zinc-400 max-w-sm mb-6 font-medium">
+            Okuduğun, okumakta olduğun ya da okumak istediğin ilk kitabı ekleyerek kendi kütüphaneni oluşturmaya başla.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <Button
+              variant="babyblue"
+              onClick={onOpenAddModal}
+              className="gap-2 cursor-pointer"
+            >
+              <Plus className="w-4 h-4" />
+              <span>İlk Kitabını Ekle</span>
+            </Button>
+            {onLoadSampleBooks && (
+              <Button
+                variant="outline"
+                onClick={onLoadSampleBooks}
+                className="gap-2 cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4 text-amber-500" />
+                <span>Örnek Kitaplarla Başla</span>
+              </Button>
+            )}
+          </div>
+        </Card>
+      ) : viewMode === 'timeline' ? (
         <TimelineView
           books={books}
           onSelectBook={onSelectBook}

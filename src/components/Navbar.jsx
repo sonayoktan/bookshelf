@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Input } from './ui/input';
 import { getSearchScore, getMatchType, normalizeStr } from '../lib/searchUtils';
+import UserMenu from './UserMenu';
 
 function highlightMatch(text, query) {
   if (!text || !query?.trim()) return text;
@@ -35,7 +36,11 @@ export default function Navbar({
   onExport,
   onImport,
   isDarkMode = false,
-  onToggleDarkMode
+  onToggleDarkMode,
+  isAuthEnabled = false,
+  user = null,
+  onOpenAuth,
+  onSignOut
 }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchContainerRef = useRef(null);
@@ -197,6 +202,10 @@ export default function Navbar({
             >
               {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </Button>
+
+            {isAuthEnabled && (
+              <UserMenu user={user} onOpenAuth={onOpenAuth} onSignOut={onSignOut} />
+            )}
 
             <Button
               variant="babyblue"
