@@ -169,7 +169,7 @@ export default function Navbar({
           {/* Center: Large Handwriting Italic Title with GIFs on Left & Right */}
           <div className="flex-1 sm:absolute sm:left-1/2 sm:-translate-x-1/2 flex items-center justify-center gap-2 sm:gap-3 select-none py-0.5">
             <img
-              src="/devnature1990.gif"
+              src={`${import.meta.env.BASE_URL || '/'}devnature1990.gif`.replace('//', '/')}
               alt="Nature Animation"
               className="h-7 sm:h-9 md:h-10 w-auto object-contain shrink-0 drop-shadow-sm pointer-events-none"
             />
@@ -177,7 +177,7 @@ export default function Navbar({
               Shelf of Books
             </h1>
             <img
-              src="/heart.gif"
+              src={`${import.meta.env.BASE_URL || '/'}heart.gif`.replace('//', '/')}
               alt="Heart Animation"
               className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 object-contain shrink-0 drop-shadow-sm pointer-events-none"
             />

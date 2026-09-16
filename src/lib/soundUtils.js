@@ -3,10 +3,12 @@
 
 let preloadedAudio = null;
 
+const soundUrl = `${import.meta.env.BASE_URL || '/'}page-flip.mp3`.replace('//', '/');
+
 // Preload audio asset
 if (typeof window !== 'undefined') {
   try {
-    preloadedAudio = new Audio('/page-flip.mp3');
+    preloadedAudio = new Audio(soundUrl);
     preloadedAudio.preload = 'auto';
   } catch (e) {
     // Ignore during SSR or if audio not supported
@@ -29,7 +31,7 @@ export function playPageFlipSound() {
 
   try {
     // Primary method: Native HTML5 Audio
-    const audio = new Audio('/page-flip.mp3');
+    const audio = new Audio(soundUrl);
     audio.volume = 0.8;
     
     const playPromise = audio.play();
