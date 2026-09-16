@@ -31,6 +31,35 @@ export default function App() {
   // Default view mode is now 'spine' (Kitap Sırtı)
   const [viewMode, setViewMode] = useState('spine');
 
+  // Dark / Light mode state with persistence
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    try {
+      const saved = localStorage.getItem('bookshelf_theme');
+      if (saved) return saved === 'dark';
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    } catch {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('bookshelf_theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('bookshelf_theme', 'light');
+      }
+    } catch (e) {
+      console.error("Failed to save theme to localStorage", e);
+    }
+  }, [isDarkMode]);
+
+  const handleToggleDarkMode = () => {
+    setIsDarkMode(prev => !prev);
+  };
+
   // Persist to localStorage
   useEffect(() => {
     try {
@@ -160,7 +189,7 @@ export default function App() {
   }, [books, selectedGenre]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fce7f3] text-zinc-900 selection:bg-[#89CFF0] selection:text-gray-800">
+    <div className="min-h-screen flex flex-col bg-[#fce7f3] dark:bg-[#121214] text-zinc-900 dark:text-zinc-100 selection:bg-[#89CFF0] selection:text-gray-800 transition-colors duration-300">
       
       {/* Top Navigation & Genre Selection */}
       <Navbar
@@ -176,6 +205,8 @@ export default function App() {
         totalBooks={books.length}
         onExport={handleExport}
         onImport={handleImport}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={handleToggleDarkMode}
       />
 
       {/* Main Bookshelf - directly below genres, defaults to spine view */}
@@ -198,6 +229,8 @@ export default function App() {
       {selectedBook && (
         <BookModal
           book={selectedBook}
+          books={filteredBooks}
+          onSelectBook={handleSelectBook}
           onClose={() => setSelectedBook(null)}
           onUpdateBook={handleUpdateBook}
           onDeleteBook={handleDeleteBook}
@@ -212,18 +245,18 @@ export default function App() {
       />
 
       {/* Footer */}
-      <footer className="border-t border-pink-200/80 py-6 px-4 text-center text-xs text-gray-700 bg-pink-100/60">
+      <footer className="border-t border-pink-200/80 dark:border-zinc-800 py-6 px-4 text-center text-xs text-gray-700 dark:text-zinc-400 bg-pink-100/60 dark:bg-zinc-900/60 transition-colors">
         <div className="flex items-center justify-center gap-4 flex-wrap">
-          <span className="font-semibold text-black">Shelf of Books · Kişisel Okuma Günlüğü</span>
+          <span className="font-semibold text-black dark:text-zinc-200">Shelf of Books · Kişisel Okuma Günlüğü</span>
           <span>•</span>
           <button
             onClick={handleExport}
-            className="text-gray-700 hover:text-black underline underline-offset-2 font-medium"
+            className="text-gray-700 dark:text-zinc-300 hover:text-black dark:hover:text-white underline underline-offset-2 font-medium"
           >
             Kitaplığı Yedekle (JSON)
           </button>
           <span>•</span>
-          <label className="text-gray-700 hover:text-black underline underline-offset-2 font-medium cursor-pointer">
+          <label className="text-gray-700 dark:text-zinc-300 hover:text-black dark:hover:text-white underline underline-offset-2 font-medium cursor-pointer">
             Yedekten Yükle
             <input
               type="file"
@@ -240,7 +273,7 @@ export default function App() {
                 localStorage.removeItem(STORAGE_KEY);
               }
             }}
-            className="text-gray-700 hover:text-black underline underline-offset-2 font-medium"
+            className="text-gray-700 dark:text-zinc-300 hover:text-black dark:hover:text-white underline underline-offset-2 font-medium"
           >
             Varsayılan Kitapları Geri Yükle
           </button>

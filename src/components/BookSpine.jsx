@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, Bookmark, CheckCircle2, Clock, Sparkles } from 'lucide-react';
+import { Star, Bookmark, CheckCircle2, Clock, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Badge } from './ui/badge';
 
@@ -112,7 +112,7 @@ export default function BookSpine({ book, onSelect, viewMode = 'spine' }) {
           {/* Favorite bookmark: Baby blue */}
           {book.favorite && (
             <div className="absolute top-0 right-3 w-3.5 h-6 bg-[#89CFF0] shadow-md flex items-center justify-center text-gray-800 rounded-b-sm">
-              <Sparkles className="w-2.5 h-2.5" />
+              <Heart className="w-2.5 h-2.5 fill-rose-500 text-rose-500" />
             </div>
           )}
 

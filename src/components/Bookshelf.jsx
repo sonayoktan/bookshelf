@@ -140,10 +140,10 @@ export default function Bookshelf({
   return (
     <div className="w-full max-w-7xl mx-auto px-4 md:px-8 py-6">
       {/* Controls Bar above shelf */}
-      <div className="flex items-center justify-between mb-6 pb-3 border-b border-pink-200">
-        <div className="flex items-center gap-2 text-xs text-gray-700">
-          <span className="font-bold text-black">Görünüm:</span>
-          <div className="flex items-center bg-white/90 border border-pink-200 rounded-xl p-0.5 shadow-xs">
+      <div className="flex items-center justify-between mb-6 pb-3 border-b border-pink-200 dark:border-zinc-800">
+        <div className="flex items-center gap-2 text-xs text-gray-700 dark:text-zinc-300">
+          <span className="font-bold text-black dark:text-zinc-100">Görünüm:</span>
+          <div className="flex items-center bg-white/90 dark:bg-zinc-800/90 border border-pink-200 dark:border-zinc-700 rounded-xl p-0.5 shadow-xs">
             <Button
               variant={viewMode === 'spine' ? 'tabActive' : 'tabInactive'}
               size="sm"
@@ -168,7 +168,7 @@ export default function Bookshelf({
               onClick={() => setViewMode('timeline')}
               className="gap-1.5"
             >
-              <Calendar className="w-3.5 h-3.5 text-sky-700" />
+              <Calendar className="w-3.5 h-3.5 text-sky-700 dark:text-sky-300" />
               <span>Zaman Çizelgesi</span>
             </Button>
           </div>
@@ -187,14 +187,14 @@ export default function Bookshelf({
           onOpenAddModal={onOpenAddModal}
         />
       ) : books.length === 0 ? (
-        <Card className="py-20 text-center flex flex-col items-center justify-center border border-dashed border-pink-300 bg-white/70 shadow-sm">
-          <div className="w-16 h-16 rounded-2xl bg-[#89CFF0]/25 text-sky-700 flex items-center justify-center mb-4">
+        <Card className="py-20 text-center flex flex-col items-center justify-center border border-dashed border-pink-300 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/70 shadow-sm">
+          <div className="w-16 h-16 rounded-2xl bg-[#89CFF0]/25 dark:bg-[#89CFF0]/20 text-sky-700 dark:text-sky-300 flex items-center justify-center mb-4">
             <BookOpen className="w-8 h-8" />
           </div>
-          <h3 className="text-lg font-serif font-bold text-zinc-950 mb-1">
+          <h3 className="text-lg font-serif font-bold text-zinc-950 dark:text-zinc-100 mb-1">
             Bu filtrede henüz kitap bulunamadı
           </h3>
-          <p className="text-sm text-gray-700 max-w-sm mb-6 font-medium">
+          <p className="text-sm text-gray-700 dark:text-zinc-400 max-w-sm mb-6 font-medium">
             Arama terimlerini değiştirebilir veya kitaplığına hemen yeni bir kitap ekleyebilirsin.
           </p>
           <Button
@@ -215,7 +215,7 @@ export default function Bookshelf({
               type="button"
               onClick={() => scrollByAmount(-350)}
               aria-label="Sola kaydır"
-              className="absolute -left-3 md:-left-4 top-[40%] -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/95 hover:bg-[#89CFF0] text-gray-800 border border-pink-200 shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer backdrop-blur-xs"
+              className="absolute -left-3 md:-left-4 top-[40%] -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/95 dark:bg-zinc-800/95 hover:bg-[#89CFF0] dark:hover:bg-[#89CFF0] text-gray-800 dark:text-zinc-100 hover:text-black border border-pink-200 dark:border-zinc-700 shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer backdrop-blur-xs"
             >
               <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
             </button>
@@ -227,7 +227,7 @@ export default function Bookshelf({
               type="button"
               onClick={() => scrollByAmount(350)}
               aria-label="Sağa kaydır"
-              className="absolute -right-3 md:-right-4 top-[40%] -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/95 hover:bg-[#89CFF0] text-gray-800 border border-pink-200 shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer backdrop-blur-xs"
+              className="absolute -right-3 md:-right-4 top-[40%] -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/95 dark:bg-zinc-800/95 hover:bg-[#89CFF0] dark:hover:bg-[#89CFF0] text-gray-800 dark:text-zinc-100 hover:text-black border border-pink-200 dark:border-zinc-700 shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer backdrop-blur-xs"
             >
               <ChevronRight className="w-5 h-5 stroke-[2.5]" />
             </button>
@@ -263,12 +263,12 @@ export default function Bookshelf({
           <div className="shelf-shadow w-full pointer-events-none" />
 
           {/* Shelf footer info & hint */}
-          <div className="flex items-center justify-between mt-2.5 px-2 text-xs text-pink-900/70 select-none">
+          <div className="flex items-center justify-between mt-2.5 px-2 text-xs text-pink-900/70 dark:text-zinc-400 select-none">
             <div className="flex items-center gap-1.5 font-medium">
-              <MoveHorizontal className="w-4 h-4 text-[#b8406a]" />
+              <MoveHorizontal className="w-4 h-4 text-[#b8406a] dark:text-[#fef3c7]" />
               <span>Fare ile sağa-sola sürükleyerek veya fare tekerleğiyle kitapları kaydırabilirsiniz</span>
             </div>
-            <div className="font-mono text-[11px] font-semibold text-pink-900/60">
+            <div className="font-mono text-[11px] font-semibold text-pink-900/60 dark:text-zinc-500">
               RAF #1
             </div>
           </div>

@@ -6,15 +6,25 @@
   color-scheme: light;
 }
 
+html.dark {
+  color-scheme: dark;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
   background-color: #fce7f3;
   color: #111827;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Custom Scrollbar for Pink Theme */
+html.dark body {
+  background-color: #121214;
+  color: #f3f4f6;
+}
+
+/* Custom Scrollbar for Pink & Dark Themes */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -22,12 +32,21 @@ body {
 ::-webkit-scrollbar-track {
   background: #fce7f3;
 }
+html.dark ::-webkit-scrollbar-track {
+  background: #18181b;
+}
 ::-webkit-scrollbar-thumb {
   background: #f472b6;
   border-radius: 4px;
 }
+html.dark ::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+}
 ::-webkit-scrollbar-thumb:hover {
   background: #ec4899;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #52525b;
 }
 
 /* 3D Perspective utilities for bookshelf */
@@ -50,9 +69,22 @@ body {
     inset 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
+html.dark .shelf-plank {
+  background: linear-gradient(180deg, #8a5732 0%, #683918 40%, #3e1b05 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 10px 25px -3px rgba(0, 0, 0, 0.6),
+    0 4px 6px -2px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
 .shelf-shadow {
   height: 28px;
   background: radial-gradient(ellipse at 50% -20%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 75%);
+}
+
+html.dark .shelf-shadow {
+  background: radial-gradient(ellipse at 50% -20%, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 75%);
 }
 
 /* Hide scrollbar for clean drag experience */

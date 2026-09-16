@@ -8,15 +8,15 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "border-sky-300 bg-[#89CFF0]/25 text-gray-700 font-semibold",
+          "border-sky-300 dark:border-sky-700 bg-[#89CFF0]/25 dark:bg-[#89CFF0]/20 text-gray-700 dark:text-sky-200 font-semibold",
         babyblue:
-          "border-sky-300 bg-[#89CFF0] text-gray-700 font-bold shadow-xs",
+          "border-sky-300 bg-[#89CFF0] text-gray-800 font-bold shadow-xs",
         secondary:
-          "border-pink-200 bg-white/80 text-gray-700",
+          "border-pink-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-800 text-gray-700 dark:text-zinc-200",
         destructive:
           "border-transparent bg-red-500 text-white shadow hover:bg-red-600",
-        outline: "border-pink-300 text-black font-semibold bg-white/60",
-        pink: "border-pink-200 bg-pink-100 text-pink-950 font-semibold",
+        outline: "border-pink-300 dark:border-zinc-700 text-black dark:text-zinc-200 font-semibold bg-white/60 dark:bg-zinc-800/60",
+        pink: "border-pink-200 dark:border-pink-900/50 bg-pink-100 dark:bg-pink-950/40 text-pink-950 dark:text-pink-200 font-semibold",
       },
     },
     defaultVariants: {

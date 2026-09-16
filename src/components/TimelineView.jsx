@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, BookOpen, Star, Clock, Bookmark, Sparkles, CheckCircle2, Layers } from 'lucide-react';
+import { Calendar, BookOpen, Star, Clock, Bookmark, CheckCircle2, Layers } from 'lucide-react';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
@@ -137,14 +137,14 @@ export default function TimelineView({ books = [], onSelectBook, onOpenAddModal 
 
   if (books.length === 0) {
     return (
-      <Card className="py-20 text-center flex flex-col items-center justify-center border border-dashed border-pink-300 bg-white/70 shadow-sm">
-        <div className="w-16 h-16 rounded-2xl bg-[#89CFF0]/25 text-sky-700 flex items-center justify-center mb-4">
+      <Card className="py-20 text-center flex flex-col items-center justify-center border border-dashed border-pink-300 dark:border-zinc-700 bg-white/70 dark:bg-zinc-900/80 shadow-sm">
+        <div className="w-16 h-16 rounded-2xl bg-[#89CFF0]/25 dark:bg-sky-500/20 text-sky-700 dark:text-sky-300 flex items-center justify-center mb-4">
           <BookOpen className="w-8 h-8" />
         </div>
-        <h3 className="text-lg font-serif font-bold text-zinc-950 mb-1">
+        <h3 className="text-lg font-serif font-bold text-zinc-950 dark:text-zinc-100 mb-1">
           Zaman çizelgesinde gösterilecek kitap bulunamadı
         </h3>
-        <p className="text-sm text-gray-700 max-w-sm mb-6 font-medium">
+        <p className="text-sm text-gray-700 dark:text-zinc-400 max-w-sm mb-6 font-medium">
           Okuduğun kitapların tarihlerini girerek okuma yolculuğunu kronolojik olarak takip edebilirsin.
         </p>
         <Button variant="babyblue" onClick={onOpenAddModal} className="gap-2">
@@ -160,8 +160,8 @@ export default function TimelineView({ books = [], onSelectBook, onOpenAddModal 
       {/* Year Filter Pills */}
       {availableYears.length > 1 && (
         <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
-          <span className="text-gray-700 font-bold flex items-center gap-1 shrink-0">
-            <Calendar className="w-3.5 h-3.5 text-sky-700" /> Yıl Filtresi:
+          <span className="text-gray-700 dark:text-zinc-300 font-bold flex items-center gap-1 shrink-0">
+            <Calendar className="w-3.5 h-3.5 text-sky-700 dark:text-sky-400" /> Yıl Filtresi:
           </span>
           <Button
             variant={selectedYearFilter === 'all' ? 'babyblue' : 'outline'}
@@ -184,17 +184,17 @@ export default function TimelineView({ books = [], onSelectBook, onOpenAddModal 
       )}
 
       {/* Timeline Main Container */}
-      <div className="relative pl-4 sm:pl-8 border-l-2 border-pink-300/80 space-y-12 ml-2 sm:ml-4">
+      <div className="relative pl-4 sm:pl-8 border-l-2 border-pink-300/80 dark:border-zinc-700 space-y-12 ml-2 sm:ml-4">
         {filteredGroups.map((yearGroup) => (
           <div key={yearGroup.key} className="relative space-y-6">
             
             {/* Year Node Milestone */}
             <div className="flex items-center gap-3 -ml-[25px] sm:-ml-[41px]">
-              <div className="w-9 h-9 rounded-full bg-[#89CFF0] border-4 border-pink-100 shadow-md flex items-center justify-center text-gray-800 shrink-0">
+              <div className="w-9 h-9 rounded-full bg-[#89CFF0] dark:bg-sky-600 border-4 border-pink-100 dark:border-zinc-800 shadow-md flex items-center justify-center text-gray-800 dark:text-zinc-100 shrink-0">
                 <Calendar className="w-4 h-4" />
               </div>
               <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="text-xl sm:text-2xl font-bold font-serif text-black">
+                <h3 className="text-xl sm:text-2xl font-bold font-serif text-black dark:text-zinc-100">
                   {yearGroup.title}
                 </h3>
                 {yearGroup.key !== 'CURRENT' && yearGroup.key !== 'WISHLIST' && (
@@ -214,17 +214,17 @@ export default function TimelineView({ books = [], onSelectBook, onOpenAddModal 
                   
                   {/* Month title badge */}
                   <div className="flex items-center gap-2">
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#b8406a]" />
-                    <span className="text-sm font-bold font-serif text-[#b8406a] uppercase tracking-wide">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#b8406a] dark:bg-[#f472b6]" />
+                    <span className="text-sm font-bold font-serif text-[#b8406a] dark:text-[#f472b6] uppercase tracking-wide">
                       {monthGroup.monthName}
                     </span>
-                    <span className="text-xs text-gray-600 font-medium font-mono">
+                    <span className="text-xs text-gray-600 dark:text-zinc-400 font-medium font-mono">
                       ({monthGroup.books.length} Kitap)
                     </span>
                   </div>
 
                   {/* Books Shelf for this month */}
-                  <div className="bg-white/60 backdrop-blur-xs border border-pink-200/90 rounded-2xl p-4 shadow-sm space-y-4">
+                  <div className="bg-white/60 dark:bg-zinc-900/60 backdrop-blur-xs border border-pink-200/90 dark:border-zinc-800 rounded-2xl p-4 shadow-sm space-y-4">
                     <div className="flex items-end gap-4 sm:gap-6 overflow-x-auto no-scrollbar pb-1 pt-2">
                       {monthGroup.books.map((book) => (
                         <motion.div
@@ -236,7 +236,7 @@ export default function TimelineView({ books = [], onSelectBook, onOpenAddModal 
                           style={{ width: '130px' }}
                         >
                           {/* Book Cover Card */}
-                          <div className="w-[120px] h-[175px] rounded-lg overflow-hidden bg-white border border-pink-200 shadow-md relative group-hover:border-sky-300 transition-colors">
+                          <div className="w-[120px] h-[175px] rounded-lg overflow-hidden bg-white dark:bg-zinc-800 border border-pink-200 dark:border-zinc-700 shadow-md relative group-hover:border-sky-300 transition-colors">
                             <img
                               src={book.coverUrl}
                               alt={book.title}
@@ -276,16 +276,16 @@ export default function TimelineView({ books = [], onSelectBook, onOpenAddModal 
                           {/* Info below cover */}
                           <div className="mt-2 w-full">
                             <h4
-                              className="text-xs font-bold text-zinc-950 truncate leading-snug group-hover:text-sky-700 transition-colors"
+                              className="text-xs font-bold text-zinc-950 dark:text-zinc-100 truncate leading-snug group-hover:text-sky-700 dark:group-hover:text-sky-300 transition-colors"
                               title={book.title}
                             >
                               {book.title}
                             </h4>
-                            <p className="text-[10px] text-gray-600 font-medium truncate mt-0.5" title={book.author}>
+                            <p className="text-[10px] text-gray-600 dark:text-zinc-400 font-medium truncate mt-0.5" title={book.author}>
                               {book.author}
                             </p>
                             {book.readDate && (
-                              <span className="inline-block text-[9px] text-gray-500 font-mono mt-1 px-1.5 py-0.5 rounded bg-pink-100/60">
+                              <span className="inline-block text-[9px] text-gray-500 dark:text-zinc-400 font-mono mt-1 px-1.5 py-0.5 rounded bg-pink-100/60 dark:bg-zinc-800">
                                 {book.readDate}
                               </span>
                             )}
