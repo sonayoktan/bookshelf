@@ -4,11 +4,7 @@ import { Calendar, BookOpen, Star, Clock, Bookmark, CheckCircle2, Layers } from 
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-
-const TURKISH_MONTHS = [
-  'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
-  'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'
-];
+import { TURKISH_MONTHS } from '../lib/readingDate';
 
 function parseBookDate(book) {
   const dateStr = book.readDate || '';

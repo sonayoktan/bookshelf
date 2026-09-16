@@ -8,12 +8,16 @@ import BookModal from './components/BookModal';
 import AddBookModal from './components/AddBookModal';
 import AuthModal from './components/AuthModal';
 import LocalImportBanner from './components/LocalImportBanner';
+import WelcomeCard from './components/WelcomeCard';
+import ReadingGoalCard from './components/ReadingGoalCard';
 
 import { getSearchScore } from './lib/searchUtils';
 import { playPageFlipSound } from './lib/soundUtils';
 import { isAuthEnabled } from './lib/supabase';
 import { fetchBooks, insertBooks, updateBook, deleteBook } from './lib/booksApi';
-import { useAuth } from './hooks/useAuth';
+import { fetchReadingGoal, saveReadingGoal } from './lib/readingGoalsApi';
+import { getReadYear } from './lib/readingDate';
+import { useAuth, getDisplayName } from './hooks/useAuth';
 
 // Books were stored only in the browser before accounts existed
 const LEGACY_STORAGE_KEY = 'bookshelf_reading_diary_data';
@@ -44,6 +48,9 @@ export default function App() {
   const [legacyLocalBooks, setLegacyLocalBooks] = useState(readLegacyLocalBooks);
   const [authModal, setAuthModal] = useState({ isOpen: false, mode: 'sign_in', reason: '' });
   const [notice, setNotice] = useState('');
+  // undefined = not loaded yet, null = no goal set for this year
+  const [readingGoalTarget, setReadingGoalTarget] = useState(undefined);
+  const currentYear = new Date().getFullYear();
 
   // Guests see the sample shelf; signed-in users see their own
   const books = userId ? (userBooks ?? []) : INITIAL_BOOKS;
@@ -91,8 +98,18 @@ export default function App() {
   useEffect(() => {
     let isCancelled = false;
     setUserBooks(null);
+    setReadingGoalTarget(undefined);
     setSelectedBook(null);
     if (!userId) return;
+
+    fetchReadingGoal(userId, currentYear)
+      .then((target) => {
+        if (!isCancelled) setReadingGoalTarget(target);
+      })
+      .catch((e) => {
+        console.error("Failed to load reading goal", e);
+        if (!isCancelled) setReadingGoalTarget(null);
+      });
 
     fetchBooks(userId)
       .then((loadedBooks) => {
@@ -106,7 +123,7 @@ export default function App() {
     return () => {
       isCancelled = true;
     };
-  }, [userId]);
+  }, [userId, currentYear]);
 
   useEffect(() => {
     if (!notice) return;
@@ -168,6 +185,25 @@ export default function App() {
       origin: { y: 0.7 },
       colors: ['#89CFF0', '#72bbf0', '#f472b6', '#ec4899', '#38bdf8']
     });
+  };
+
+  // Bigger celebration from both sides when the yearly goal is reached
+  const handleGoalReached = useCallback(() => {
+    const colors = ['#89CFF0', '#72bbf0', '#f472b6', '#ec4899', '#fde68a'];
+    confetti({ particleCount: 120, angle: 60, spread: 70, origin: { x: 0, y: 0.7 }, colors });
+    confetti({ particleCount: 120, angle: 120, spread: 70, origin: { x: 1, y: 0.7 }, colors });
+  }, []);
+
+  const booksReadThisYear = useMemo(
+    () => (userBooks ?? []).filter(book => getReadYear(book) === currentYear).length,
+    [userBooks, currentYear]
+  );
+
+  const handleSaveReadingGoal = async (targetBooks) => {
+    const previousTarget = readingGoalTarget;
+    setReadingGoalTarget(targetBooks);
+    const isSaved = await syncWithDatabase(() => saveReadingGoal(userId, currentYear, targetBooks));
+    if (!isSaved) setReadingGoalTarget(previousTarget);
   };
 
   // Add new book
@@ -357,6 +393,27 @@ export default function App() {
             onImport={handleImportLegacyBooks}
             onDismiss={handleDismissLegacyBooks}
           />
+        )}
+        {canEdit && userBooks !== null && readingGoalTarget !== undefined && (
+          <section className="w-full max-w-7xl mx-auto px-4 md:px-8 pt-6 grid grid-cols-1 lg:grid-cols-5 gap-3">
+            <div className="lg:col-span-3">
+              <WelcomeCard
+                displayName={getDisplayName(user)}
+                userId={userId}
+                books={userBooks}
+                onSelectBook={handleSelectBook}
+              />
+            </div>
+            <div className="lg:col-span-2">
+              <ReadingGoalCard
+                year={currentYear}
+                readCount={booksReadThisYear}
+                targetBooks={readingGoalTarget}
+                onSaveTarget={handleSaveReadingGoal}
+                onGoalReached={handleGoalReached}
+              />
+            </div>
+          </section>
         )}
         <Bookshelf
           books={filteredBooks}

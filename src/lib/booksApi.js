@@ -41,7 +41,8 @@ function fromRow(row) {
     favorite: row.favorite,
     review: row.review,
     quotes: row.quotes || [],
-    shelfNumber: row.shelf_number
+    shelfNumber: row.shelf_number,
+    createdAt: row.created_at
   };
 }
 

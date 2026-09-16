@@ -20,6 +20,7 @@ import {
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Input } from './ui/input';
+import { formatTurkishDate, getReadYear } from '../lib/readingDate';
 
 export default function BookModal({
   book,
@@ -134,6 +135,10 @@ export default function BookModal({
   const handleStatusChange = (newStatus) => {
     if (!ensureCanEdit()) return;
     const updated = { ...editedBook, status: newStatus };
+    // Finishing a book without a known read date (e.g. "Şu an okunuyor") records today
+    if (newStatus === 'read' && getReadYear(updated) === null) {
+      updated.readDate = formatTurkishDate(new Date());
+    }
     setEditedBook(updated);
     onUpdateBook(updated);
   };
