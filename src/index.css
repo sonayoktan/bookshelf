@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #fce7f3;
+  color: #111827;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar for Pink Theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #fce7f3;
+}
+::-webkit-scrollbar-thumb {
+  background: #f472b6;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ec4899;
+}
+
+/* 3D Perspective utilities for bookshelf */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Realistic Shelf Plank styling - Warm Natural Wood on Pink Background */
+.shelf-plank {
+  height: 18px;
+  background: linear-gradient(180deg, #d49a6a 0%, #ad6834 40%, #78350f 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 
+    0 10px 20px -3px rgba(0, 0, 0, 0.18),
+    0 4px 6px -2px rgba(0, 0, 0, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.shelf-shadow {
+  height: 28px;
+  background: radial-gradient(ellipse at 50% -20%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 75%);
+}
+
+/* Hide scrollbar for clean drag experience */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
