@@ -130,7 +130,6 @@ export default function Bookshelf({
   // Prevent opening book modal if the user was dragging the shelf
   const handleSelectBook = (book) => {
     if (hasMovedRef.current) return;
-    playPageFlipSound();
     onSelectBook(book);
   };
 
