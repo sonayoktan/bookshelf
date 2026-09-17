@@ -6,6 +6,7 @@ import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Input } from './ui/input';
 import { ensureLatinAuthor } from '../lib/transliterate';
+import { formatTurkishDate } from '../lib/readingDate';
 
 const SPINE_COLORS = [
   { name: 'Kehribar', value: '#d97706' },
@@ -34,7 +35,6 @@ export default function AddBookModal({ isOpen, onClose, onAddBook }) {
   const [status, setStatus] = useState('read');
   const [pages, setPages] = useState('');
   const [year, setYear] = useState(new Date().getFullYear().toString());
-  const [readDate, setReadDate] = useState('Bugün');
   const [review, setReview] = useState('');
   const [quote, setQuote] = useState('');
   const [favorite, setFavorite] = useState(false);
@@ -162,7 +162,7 @@ export default function AddBookModal({ isOpen, onClose, onAddBook }) {
       status,
       pages: Number(pages) || 200,
       year: year || new Date().getFullYear().toString(),
-      readDate: status === 'read' ? readDate : (status === 'reading' ? 'Şu an okunuyor' : 'İstek Listesi'),
+      readDate: status === 'read' ? formatTurkishDate(new Date()) : (status === 'reading' ? 'Şu an okunuyor' : 'İstek Listesi'),
       favorite,
       spineColor,
       review: review.trim(),
