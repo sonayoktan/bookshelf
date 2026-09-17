@@ -146,13 +146,14 @@ export default function BookModal({
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-        {/* Backdrop */}
+        {/* Backdrop - Soft, rapid fade without heavy screen blackout */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
           onClick={onClose}
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/40 backdrop-blur-[2px]"
         />
 
         {/* Floating Previous Book Button */}
@@ -181,27 +182,27 @@ export default function BookModal({
           </button>
         )}
 
-        {/* Modal Window */}
+        {/* Modal Window - Snappy, immediate response */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.97, y: 8 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          transition={{ type: "spring", stiffness: 300, damping: 28 }}
+          exit={{ opacity: 0, scale: 0.97, y: 8 }}
+          transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-full max-w-3xl bg-white dark:bg-zinc-900 border border-pink-200 dark:border-zinc-800 rounded-2xl shadow-2xl overflow-hidden z-10 my-8 text-black dark:text-zinc-100"
         >
           {/* Header Bar */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-pink-200 dark:border-zinc-800 bg-pink-50/80 dark:bg-zinc-850/80">
             <div className="flex items-center gap-2">
-              <Badge variant="default">
+              <Badge variant="default" className="text-black dark:text-black font-bold">
                 {editedBook.genre || "Genel"}
               </Badge>
               {editedBook.year && (
-                <span className="text-xs text-gray-600 dark:text-zinc-400 font-mono font-medium">
+                <span className="text-xs text-black dark:text-black font-mono font-bold">
                   {editedBook.year}
                 </span>
               )}
               {hasMultipleBooks && currentIndex !== -1 && (
-                <span className="text-xs text-gray-500 dark:text-zinc-400 font-mono font-medium ml-1">
+                <span className="text-xs text-black/80 dark:text-black font-mono font-bold ml-1">
                   ({currentIndex + 1} / {books.length})
                 </span>
               )}
@@ -272,7 +273,7 @@ export default function BookModal({
                 variant="ghost"
                 size="iconSm"
                 onClick={onClose}
-                className="ml-2"
+                className="ml-2 text-black dark:text-black hover:bg-pink-100 dark:hover:bg-pink-200/50"
               >
                 <X className="w-4 h-4" />
               </Button>

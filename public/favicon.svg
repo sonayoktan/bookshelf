@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%">
+  <!-- Open Book Silhouette with Soft Pink Fill & Rose Pink Stroke -->
+  <!-- Left Page -->
+  <path d="M2 4.5C5.5 3.2 9 3.8 12 6.2V19.8C9 17.5 5.5 17.5 2 18.5V4.5Z" 
+        fill="#fbcfe8" 
+        stroke="#f43f5e" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" />
+  <!-- Right Page -->
+  <path d="M22 4.5C18.5 3.2 15 3.8 12 6.2V19.8C15 17.5 18.5 17.5 22 18.5V4.5Z" 
+        fill="#fbcfe8" 
+        stroke="#f43f5e" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" />
+  <!-- Page Lines (White/Soft Reading Lines) -->
+  <line x1="5.2" y1="9" x2="9.2" y2="10" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" />
+  <line x1="5.2" y1="13" x2="9.2" y2="14" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" />
+  <line x1="18.8" y1="9" x2="14.8" y2="10" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" />
+  <line x1="18.8" y1="13" x2="14.8" y2="14" stroke="#ffffff" stroke-width="1.3" stroke-linecap="round" />
+</svg>
